@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0; /* Light grey background */
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align items to the top of the viewport */
+            min-height: 100vh; /* Ensure the body takes at least the full viewport height */
+            padding-top: 20px; /* Add some padding at the top */
+            padding-bottom: 20px; /* Add some padding at the bottom if needed */
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 450px; /* Adjust container width as needed */
+            margin-top: 20px; /* Add some top margin to the container for spacing */
+            margin-bottom: 20px; /* Add some bottom margin to the container for spacing */
+        }
+
+        .header-area {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .logo-container {
+            text-align: left;
+        }
+
+        .university-logo {
+            width: 100px; /* Adjust logo size */
+            height: auto;
+        }
+
+        .passport-area {
+            text-align: right;
+        }
+
+        .passport-placeholder {
+            width: 100px; /* Passport picture placeholder size */
+            height: 100px;
+            background-color: #ddd; /* Light grey placeholder */
+            border-radius: 8px;
+            margin-left: auto; /* Align to right */
+            margin-bottom: 5px;
+            display: flex; /* Enable flexbox for centering content */
+            justify-content: center; /* Center content horizontally */
+            align-items: center; /* Center content vertically */
+            cursor: pointer; /* Change cursor to pointer on hover */
+            overflow: hidden; /* Clip image if it overflows */
+            position: relative; /* To position passport-text */
+        }
+
+        .passport-text {
+            font-size: 0.9em;
+            color: #777;
+            text-align: center; /* Center text within the placeholder */
+            position: absolute; /* Position text over the placeholder */
+        }
+
+        .upload-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .upload-icon {
+            /* Style for an upload icon if you want to add one */
+            /* Example:
+            width: 30px;
+            height: 30px;
+            background-image: url('upload-icon.png'); /* Replace with your icon */
+            /*background-size: contain;
+            background-repeat: no-repeat;
+            margin-bottom: 5px; */
+        }
+
+
+        /* Style for when a file is selected */
+        .passport-placeholder.has-image {
+            background-color: transparent; /* Hide grey background when image is present */
+        }
+
+        .passport-placeholder.has-image .passport-text {
+            display: none; /* Hide text when image is present */
+        }
+
+        .passport-placeholder.has-image img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensure image covers the placeholder */
+            border-radius: 8px; /* Match placeholder border-radius */
+        }
+
+
+        .greeting-area {
+            margin-bottom: 25px;
+        }
+
+        .hello-button {
+            background-color: #90EE90; /* Light Green - adjust to match image */
+            color: #fff; /* White text */
+            padding: 15px 30px;
+            border: none;
+            border-radius: 30px; /* Rounded button */
+            font-size: 1.2em;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .registration-form {
+            text-align: left;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .example-text {
+            font-weight: normal;
+            font-size: 0.9em;
+            color: #777;
+        }
+
+        input[type="text"],
+        select,
+        input[type="file"],
+        input[type="password"] { /* Include input[type="password"] here */
+            width: 100%;
+            padding: 12px;
+            margin-top: 6px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 1em;
+            color: #333;
+        }
+
+        select {
+            appearance: none; /* Remove default arrow in some browsers */
+            -webkit-appearance: none; /* For Safari */
+            -moz-appearance: none; /* For Firefox */
+            background-image: url('data:image/svg+xml;utf8,<svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+            background-repeat: no-repeat;
+            background-position-x: 100%;
+            background-position-y: 5px;
+            padding-right: 30px; /* Space for arrow */
+        }
+
+        select::-ms-expand {
+            display: none; /* Hide default arrow in IE */
+        }
+
+
+        .register-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2em;
+            margin-top: 20px;
+            width: 100%;
+            font-weight: bold;
+        }
+
+        .register-button:hover {
+            background-color: #80da7a; /* Darker green on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-area">
+            <div class="logo-container">
+                <img src="images/university-logo.jpg" alt="University Logo" class="university-logo">
+            </div>
+            <div class="passport-area">
+                <div class="passport-placeholder">
+                    <label for="passport-upload" class="upload-label">
+                        <span class="passport-text">Upload<br>Passport</span>
+                        <img id="passport-image-preview" src="#" alt="Passport Preview" style="display: none; width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                    </label>
+                </div>
+                <input type="file" id="passport-upload" name="passport-upload" accept="image/*" style="display: none;">
+            </div>
+        </div>
+
+        <div class="registration-form">
+            <form id="registrationForm">
+                <div class="input-group">
+                    <label for="name">NAME: <span class="example-text">Eg: OWUSU DAVID</span></label>
+                    <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                </div>
+                <div class="input-group">
+                    <label for="program">PROGRAM: <span class="example-text">Eg: COMPUTER ENGINEERING</span></label>
+                    <input type="text" id="program" name="program" placeholder="Enter your program" required>
+                </div>
+                <div class="input-group">
+                    <label for="level">LEVEL: <span class="example-text">Eg: 200</span></label>
+                    <input type="text" id="level" name="level" placeholder="Enter your level" required>
+                </div>
+                <div class="input-group">
+                    <label for="admission-year">YEAR OF ADMISSION: <span class="example-text">Eg: 2023/2024</span></label>
+                    <input type="text" id="admission-year" name="admission-year" placeholder="Enter year of admission" required>
+                </div>
+                <div class="input-group">
+                    <label for="index-number">INDEX NUMBER: <span class="example-text">Eg: UEB3509223</span></label>
+                    <input type="text" id="index-number" name="index-number" placeholder="Enter your index number" required>
+                </div>
+                <div class="input-group">
+                    <label for="department">DEPARTMENT:</label>
+                    <select id="department" name="department" required>
+                        <option value="">Select Department</option>
+                        <option value="computer-science">Computer Science</option>
+                        <option value="engineering">Engineering</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="dob">DATE OF BIRTH: <span class="example-text">Eg: 2ND APRIL, 2002</span></label>
+                    <input type="text" id="dob" name="dob" placeholder="Enter your date of birth" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">PASSWORD:</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+                <div class="input-group">
+                    <label for="confirm-password">CONFIRM PASSWORD:</label>
+                    <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your password" required>
+                </div>
+                <a href="#">
+                    <button type="button" class="register-button" onclick="validateForm()">REGISTER</button></a>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const passportUpload = document.getElementById('passport-upload');
+        const passportPlaceholder = document.querySelector('.passport-placeholder');
+        const passportText = document.querySelector('.passport-text');
+        const passportImagePreview = document.getElementById('passport-image-preview');
+        const registrationForm = document.getElementById('registrationForm');
+
+        passportUpload.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    passportImagePreview.src = e.target.result;
+                    passportImagePreview.style.display = 'block';
+                    passportPlaceholder.classList.add('has-image');
+                }
+                reader.readAsDataURL(file);
+            } else {
+                passportImagePreview.src = '#';
+                passportImagePreview.style.display = 'none';
+                passportPlaceholder.classList.remove('has-image');
+            }
+        });
+
+        function validateForm() {
+            const form = document.getElementById('registrationForm');
+            const requiredFields = form.querySelectorAll('[required]');
+            let isFormComplete = true;
+
+            requiredFields.forEach(field => {
+                if (field.value.trim() === '') {
+                    isFormComplete = false;
+                }
+            });
+
+            if (!isFormComplete) {
+                alert('Forms incomplete');
+                return false; // Prevent further execution
+            }
+
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            if (password !== confirmPassword) {
+                alert('Passwords do not match');
+                return false;
+            }
+
+            alert('You have registered');
+            window.location.href = 'login.html';
+            return true; // Allow registration to proceed
+        }
+    </script>
+</body>
+</html>

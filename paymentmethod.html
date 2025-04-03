@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payment Page</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .payment-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 400px; /* Adjust width as needed */
+        }
+        .home-button {
+            background-color: #2bb051;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 20px;
+            display: inline-block; /* To allow margin on the right if needed */
+        }
+        .home-button:hover {
+            background-color: #2bb051;
+        }
+        .payment-method {
+            display: inline-block;
+            margin: 10px;
+            padding: 15px 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .payment-method img {
+            height: 40px;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+        .payment-method:hover {
+            background-color: #eee;
+        }
+        #payment-form {
+            margin-top: 20px;
+            text-align: left;
+        }
+        #payment-form label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        #payment-form input[type="text"],
+        #payment-form input[type="tel"],
+        #payment-form input[type="number"] {
+            width: calc(100% - 12px);
+            padding: 8px;
+            margin-bottom: 15px; /* Adjusted margin */
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            -moz-appearance: textfield; /* Remove arrows for number input in Firefox */
+        }
+        #payment-form input[type="number"]::-webkit-outer-spin-button,
+        #payment-form input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        #payment-form button {
+            background-color: #2bb051;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        #payment-form button:hover {
+            background-color: #2bb051;
+        }
+        .hidden {
+            display: none;
+        }
+        #payment-message {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-container">
+
+        <a class="home-button" href="homepage.html">Home</a>
+        <h2>Select Payment Method</h2>
+        <div id="payment-options">
+            <div class="payment-method" onclick="showPaymentForm('mtn')">
+                <img src="C:\Users\TONY\Desktop\WEBPAGE MIDSEM\DUE PAYMENT WEBSITE\images\MTN LOGO.jpg" alt="MTN Mobile Money">
+                MTN Mobile Money
+            </div>
+             <div class="payment-method" onclick="showPaymentForm('vodafone')">
+                <img src="C:\Users\TONY\Desktop\WEBPAGE MIDSEM\DUE PAYMENT WEBSITE\images\OIP.jpg" alt="Vodafone">
+                Vodafone
+            </div>
+            <div class="payment-method" onclick="showPaymentForm('airteltigo')">
+                <img src="C:\Users\TONY\Desktop\WEBPAGE MIDSEM\DUE PAYMENT WEBSITE\images\AIRTEL.jpg" alt="AirtelTigo">
+                AirtelTigo
+            </div>
+            <div class="payment-method" onclick="showPaymentForm('visa')">
+                <img src="C:\Users\TONY\Desktop\WEBPAGE MIDSEM\DUE PAYMENT WEBSITE\images\VISA OR DEBIT.jpg" alt="Visa Card">
+                Visa Card
+            </div>
+        </div>
+
+        <div id="payment-form" class="hidden">
+            <h3 id="payment-form-title"></h3>
+            <form id="actual-payment-form">
+                <div id="mobile-money-fields" class="hidden">
+                    <label for="phone-number">Phone Number:</label>
+                    <input type="number" id="phone-number" name="phone-number" placeholder="e.g., 02XXXXXXXX or 05XXXXXXXX" required pattern="^(02|05)\\d{8}$">
+                    <label for="amount-mobile">Amount:</label>
+                    <input type="number" id="amount-mobile" name="amount" placeholder="Enter Amount" required min="1">
+                </div>
+                <div id="visa-fields" class="hidden">
+                    <label for="card-number">Card Number:</label>
+                    <input type="text" id="card-number" name="card-number" placeholder="e.g., 4XXXXXXXXXXXXXXX" required>
+                    <label for="expiry-date">Expiry Date:</label>
+                    <input type="text" id="expiry-date" name="expiry-date" placeholder="MM/YY" required pattern="^(0|1)\\d{1}\\/\\d{2}$">
+                    <label for="cvv">CVV:</label>
+                    <input type="number" id="cvv" name="cvv" placeholder="e.g., 123" required minlength="3" maxlength="4">
+                    <label for="amount-visa">Amount:</label>
+                    <input type="number" id="amount-visa" name="amount" placeholder="Enter Amount" required min="0.01">
+                </div>
+                <button type="button" class="pay now" onclick="validateAndPay()">Pay Now</button>
+            </form>
+            <div id="payment-error-message" class="error-message hidden"></div>
+        </div>
+
+        <div id="payment-message" class="hidden"></div>
+    </div>
+
+    <script>
+        function showPaymentForm(method) {
+            document.getElementById('payment-options').classList.add('hidden');
+            document.getElementById('payment-form').classList.remove('hidden');
+            document.getElementById('payment-message').classList.add('hidden');
+            document.getElementById('payment-error-message').classList.add('hidden'); // Hide any previous error messages
+
+            document.getElementById('mobile-money-fields').classList.add('hidden');
+            document.getElementById('visa-fields').classList.add('hidden');
+
+            let formTitle = document.getElementById('payment-form-title');
+
+            if (method === 'mtn') {
+                formTitle.textContent = 'Pay with MTN Mobile Money';
+                document.getElementById('mobile-money-fields').classList.remove('hidden');
+            } else if (method === 'vodafone') {
+                formTitle.textContent = 'Pay with Vodafone';
+                document.getElementById('mobile-money-fields').classList.remove('hidden'); // Assuming Vodafone uses similar mobile money fields
+            } else if (method === 'airteltigo') {
+                formTitle.textContent = 'Pay with AirtelTigo';
+                document.getElementById('mobile-money-fields').classList.remove('hidden'); // Assuming AirtelTigo uses similar mobile money fields
+            } else if (method === 'visa') {
+                formTitle.textContent = 'Pay with Visa Card';
+                document.getElementById('visa-fields').classList.remove('hidden');
+            }
+        }
+
+        function validateAndPay() {
+            const paymentForm = document.getElementById('actual-payment-form');
+            const paymentMethodTitle = document.getElementById('payment-form-title').textContent;
+            const errorMessageDiv = document.getElementById('payment-error-message');
+            let isValid = true;
+            let errorMessage = '';
+
+            if (paymentMethodTitle.includes('Mobile Money')) {
+                const phoneNumberInput = document.getElementById('phone-number');
+                const amountInput = document.getElementById('amount-mobile');
+
+                if (!/^\d+$/.test(phoneNumberInput.value)) {
+                    isValid = false;
+                    errorMessage += 'Phone number must contain only numbers.<br>';
+                }
+                if (phoneNumberInput.value.length !== 10) {
+                    isValid = false;
+                    errorMessage += 'Phone number must be 10 digits long.<br>';
+                }
+                if (!/^\d+$/.test(amountInput.value)) {
+                    isValid = false;
+                    errorMessage += 'Amount must contain only numbers.<br>';
+                }
+            } else if (paymentMethodTitle.includes('Visa Card')) {
+                const cardNumberInput = document.getElementById('card-number');
+                const expiryDateInput = document.getElementById('expiry-date');
+                const cvvInput = document.getElementById('cvv');
+                const amountInput = document.getElementById('amount-visa');
+
+                if (!/^\d+$/.test(cvvInput.value)) {
+                    isValid = false;
+                    errorMessage += 'CVV must contain only numbers.<br>';
+                }
+                if (!/^\d+(\.\d{1,2})?$/.test(amountInput.value)) {
+                    isValid = false;
+                    errorMessage += 'Amount must be a valid number.<br>';
+                }
+                // You can add more specific validation for card number and expiry date if needed
+            }
+
+            if (isValid) {
+                window.location.href = 'pending_payment.html';
+            } else {
+                errorMessageDiv.innerHTML = errorMessage;
+                errorMessageDiv.classList.remove('hidden');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 50px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 400px; /* Adjust width as needed */
+        }
+
+        .logo-area {
+            margin-bottom: 20px;
+        }
+
+        .university-logo {
+            width: 100px; /* Adjust logo size as needed */
+            height: 100px;
+            margin-bottom: 10px;
+        }
+
+        .university-name {
+            font-size: 1.1em;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+
+
+        .login-form h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .example-text {
+            font-weight: normal;
+            font-size: 0.9em;
+            color: #777;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .login-button, .register-button {
+            background-color: #4CAF50; /* Green color similar to the image */
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .login-button:hover, .register-button:hover {
+            background-color: #45a049;
+        }
+
+        .register-button {
+            background-color: #f4f4f4; /* Light grey for register button */
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .register-button:hover {
+            background-color: #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo-area">
+            <img src="images/university-logo.jpg" alt="University Logo" class="university-logo">
+            <p class="university-name">UNIVERSITY OF ENERGY AND NATURAL RESOURCES</p>
+        </div>
+        <div class="login-form">
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="index-number">INDEX NUMBER: <span class="example-text">Eg: UEB1100123</span></label>
+                    <input type="text" id="index-number" name="index-number" placeholder="Enter your index number">
+                </div>
+                <div class="input-group">
+                    <label for="password">PASSWORD:</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password">
+                </div>
+                <button type="button" class="login-button" id="loginButton">LOGIN</button>
+                <a href="#" id="registerLink">
+                    <button type="button" class="register-button">REGISTER</button>
+                </a>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Prevent going back using browser's back button
+            if (window.history && window.history.pushState) {
+                window.history.pushState(null, document.title, window.location.href);
+                window.addEventListener('popstate', function (event) {
+                    window.history.pushState(null, document.title, window.location.href);
+                });
+            }
+
+            const loginForm = document.getElementById('loginForm');
+            const indexNumberInput = document.getElementById('index-number');
+            const passwordInput = document.getElementById('password');
+            const loginButton = document.getElementById('loginButton');
+            const registerLink = document.getElementById('registerLink');
+
+            loginButton.addEventListener('click', function() {
+                const indexNumber = indexNumberInput.value;
+                const password = passwordInput.value;
+
+                if (indexNumber === 'UEB3500723' && password === 'Anthony') {
+                    // Redirect to the homepage upon successful login
+                    window.location.href = 'homepage.html'; // Assuming homepage.html is in the same directory
+                } else {
+                    alert('Invalid index number or password.');
+                }
+            });
+
+            registerLink.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent the default behavior of the anchor tag
+                window.location.href = 'register.html'; // Assuming register.html is in a subdirectory named 'registration'
+            });
+        });
+    </script>
+</body>
+</html>

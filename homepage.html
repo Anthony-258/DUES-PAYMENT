@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Identification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            position: relative;
+        }
+        .container {
+            width: 80%;
+            margin: 70px auto; /* Updated to avoid overlapping with top buttons */
+            border: 2px solid #000;
+            border-radius: 10px;
+            background-color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header img {
+            width: 80px;
+            height: auto;
+        }
+        .header .student-photo {
+            width: 70px;
+            height: 50px;
+            background-color: #ccc;
+            border: 1px solid #ffffff;
+            border-radius: 10px;
+        }
+        .top-buttons {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 10px;
+            z-index: 10; /* Ensure buttons are above the popup */
+        }
+        .notification-button {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 10px;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .notification-button:hover {
+            background-color: #e53935;
+        }
+        .dashboard-menu {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            font-size: 20px;
+            padding: 5px;
+            cursor: pointer;
+            border-radius: 3px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .dashboard-menu:hover {
+            background-color: #45a049;
+        }
+        .welcome {
+            background-color: #38893b;
+            color: white;
+            padding: 10px;
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        /* Popup Menu Styles */
+        .popup-menu {
+            position: absolute;
+            top: 50px; /* Adjust as needed to position below the button */
+            right: 10px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: none; /* Initially hidden */
+            z-index: 11; /* Ensure it's above other content */
+        }
+        .popup-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .popup-menu ul li {
+            display: block; /* Make list items take full width */
+        }
+        .popup-menu ul li button {
+            display: block;
+            width: 100%; /* Make the button fill the list item */
+            padding: 10px 15px;
+            text-decoration: none;
+            color: #333;
+            border: none;
+            background: none;
+            text-align: left; /* Align text to the left like links */
+            cursor: pointer;
+        }
+        .popup-menu ul li button:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-buttons">
+        <a href="notification.html">
+        <button class="notification-button" onclick="alert('You have 3 new notifications!')">🔔</button></a>
+        <button class="dashboard-menu" onclick="toggleMenu()">☰</button>
+    </div>
+
+    <div class="popup-menu" id="popupMenu">
+        <ul>
+            <LI>
+                <button type="button" class="register-button" id="dueManagementButton">DUES MANAGEMENT</button>
+            </LI>
+            <LI>
+                <button type="button" class="register-button" id="paymentOfDuesButton">PAYMENT OF DUES</button>
+            </LI>
+            <LI>
+                <button type="button" class="register-button" id="faqSectionButton">FAQ SECTION</button>
+            </LI>
+            <LI>
+                <button type="button" class="register-button" id="signOutButton">SIGN OUT</button>
+            </LI>
+        </ul>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <div class="student-photo"><img src="images/student profile.jpg" alt="student-photo"></div>
+            <img src="images/university-logo.jpg" alt="university-logo">
+        </div>
+
+        <div class="welcome">WELCOME</div>
+
+        <table>
+            <tr>
+                <th>Name</th>
+                <td>Darko Anokye Evans</td>
+            </tr>
+            <tr>
+                <th>Program</th>
+                <td>Computer Engineering</td>
+            </tr>
+            <tr>
+                <th>Level</th>
+                <td>400</td>
+            </tr>
+            <tr>
+                <th>Year of Admission</th>
+                <td>2021-2024 Academic Year</td>
+            </tr>
+            <tr>
+                <th>Index Number</th>
+                <td>UEB1100323</td>
+            </tr>
+            <tr>
+                <th>Department</th>
+                <td>Computer and Electrical Engineering</td>
+            </tr>
+            <tr>
+                <th>Date of Birth</th>
+                <td>20th March, 2001</td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const popupMenu = document.getElementById('popupMenu');
+            popupMenu.style.display = popupMenu.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Close the popup menu if the user clicks outside of it
+        window.addEventListener('click', function(event) {
+            const popupMenu = document.getElementById('popupMenu');
+            const dashboardButton = document.querySelector('.dashboard-menu');
+            if (event.target !== dashboardButton && !popupMenu.contains(event.target)) {
+                popupMenu.style.display = 'none';
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const dueManagementButton = document.getElementById('dueManagementButton');
+            const paymentOfDuesButton = document.getElementById('paymentOfDuesButton');
+            const faqSectionButton = document.getElementById('faqSectionButton');
+            const signOutButton = document.getElementById('signOutButton');
+
+            if (dueManagementButton) {
+                dueManagementButton.addEventListener('click', function() {
+                    window.location.href = 'duemanagement.html';
+                });
+            }
+
+            if (paymentOfDuesButton) {
+                paymentOfDuesButton.addEventListener('click', function() {
+                    window.location.href = 'paymentmethod.html';
+                });
+            }
+
+            if (faqSectionButton) {
+                faqSectionButton.addEventListener('click', function() {
+                    window.location.href = 'faq.html';
+                });
+            }
+
+            if (signOutButton) {
+                signOutButton.addEventListener('click', function() {
+                    window.location.href = 'index.html';
+                });
+            }
+        });
+    </script>
+</body>
+</html>
