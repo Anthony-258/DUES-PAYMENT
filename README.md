@@ -2,10 +2,12 @@ PROPOSAL FOR DEVELOPING A STUDENT DUES PAYMENT WEBSITE
 
 INTRODUCTION  
 In today’s digital age, the convenience of online services has become paramount for educational institutions. As our department continues to grow, the need for an efficient system to manage student dues and fees has become increasingly evident. This proposal outlines the need for a dedicated website that allows students to pay their dues online, along with the advantages this development would bring.
+
 OBJECTIVES
 1.	Facilitate Online Payments: Create a user-friendly platform for students to pay their dues quickly and securely.
 2.	Enhance Record Keeping: Streamline the tracking and management of payments for both students and the department.
 3.	Improve Accessibility: Ensure that students can access payment services anytime, anywhere, reducing the need for physical visits.
+
 RATIONALE FOR DEVELOPMENT
 1.	Convenience for Students. 
 i)	24/7 Access: Students can pay their dues at anytime, eliminating the constraints of office hours.
